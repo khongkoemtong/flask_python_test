@@ -7,7 +7,17 @@
 </head>
 <body>
 
-    <h1>hello everyone welcome to flask template</h1>
+
+    {%  for mydata   in  data   %}
+
+    <h1>ID : {{mydata[0]}}</h1>
+    <h1>Name : {{mydata[1]}}</h1>
+    
+
+
+    {%endfor%}
+
+    
     
 </body>
 </html>

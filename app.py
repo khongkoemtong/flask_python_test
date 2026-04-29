@@ -1,30 +1,30 @@
-from flask import Flask ,render_template
+from flask import Flask,render_template
 import pymysql
-
 app = Flask(__name__)
 
-
 def connect_db ():
-    connection  = pymysql.connect(
+    conection = pymysql.connect(
         host="localhost",
-        user="root",
+        user='root',
         passwd="",
-        db="reaksa_piseth_db"
-
+        database="reaksa_piseth_db",
     )
-
-    if not connection:
-        print("can not connect to database ! 🥺🥺")
-    else:
-        print("database connected ! ⭐⭐🥳")    
+    return  conection
 
 
-connect_db()
+
+@app.route("/")
+def hello():
+    conection = connect_db()
+    cursor = conection.cursor()
 
 
-@app.route('/')
-def index():
-    return render_template("index.html")
+    cursor.execute("SELECT * FROM students ")
+    students = cursor.fetchall()
+    conection.commit()
+
+    return  render_template("index.html",data = students)
+
 
 if __name__=="__main__":
     app.run(debug=True)
