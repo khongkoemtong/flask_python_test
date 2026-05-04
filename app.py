@@ -1,4 +1,4 @@
-from flask import Flask,render_template
+from flask import Flask,render_template,request,redirect,url_for
 import pymysql
 app = Flask(__name__)
 
@@ -24,6 +24,30 @@ def hello():
     conection.commit()
 
     return  render_template("index.html",data = students)
+
+
+@app.route('/insert' ,methods=['POST'])
+def insert ():
+    conection = connect_db()
+    cursor = conection.cursor()
+
+
+    name = request.form['name']
+    age = request.form['age']
+    gender = request.form['gender']
+    grade = request.form['grade']
+
+
+    sql = "INSERT INTO students (name,age,gender,grade) values (%s,%s,%s,%s)"
+
+    cursor.execute(sql,(name,age,gender,grade))
+
+    conection.commit()
+
+    return redirect(url_for('hello'))
+
+
+
 
 
 if __name__=="__main__":
