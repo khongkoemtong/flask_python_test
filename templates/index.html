@@ -41,12 +41,12 @@
             </div>
 
 
-           
+
 
           </div>
 
           <div class="d-flex justify-content-end gap-1 mt-2">
-             <button class="btn btn-secondary">Cancel</button>
+            <button class="btn btn-secondary">Cancel</button>
             <button class="btn btn-primary" type="submit">Submit</button>
           </div>
 
@@ -60,7 +60,7 @@
   </div>
   <div class="d-flex justify-content-center align-items-center ">
 
-    <table class="table w-50 table-bordered ">
+    <table class="table w-50 text-center table-bordered ">
       <thead>
         <tr>
           <th scope="col">#</th>
@@ -68,6 +68,7 @@
           <th scope="col">Age</th>
           <th scope="col">Gender</th>
           <th scope="col">Grade</th>
+          <th scope="col">Action</th>
 
         </tr>
       </thead>
@@ -79,9 +80,82 @@
           <td>{{mydata[2]}}</td>
           <td>{{mydata[3]}}</td>
           <td>{{mydata[4]}}</td>
+          <td>
+            <button class="btn btn-danger" data-bs-target="#delete{{mydata[0]}}" data-bs-toggle="modal">delete</button>
+            <button class="btn btn-warning" data-bs-target="#update{{mydata[0]}}" data-bs-toggle="modal">update</button>
+          </td>
         </tr>
 
-        {% endfor %}
+
+        <div class="modal fade" id="delete{{mydata[0]}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content p-4">
+              <form action="/delete" method="post">
+                <input type="hidden" name="delete_id" value="{{mydata[0]}}">
+                <p class="text-center fs-2 fw-bold text-danger">Are you sure delete ?</p>
+                <div class="d-flex justify-content-center gap-1 mt-2">
+                  <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+                  <button class="btn btn-primary" type="submit">delete</button>
+                </div>
+
+
+              </form>
+
+
+
+            </div>
+          </div>
+          </div>
+
+
+
+
+
+          <div class="modal fade" id="update{{mydata[0]}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content p-4">
+
+                <form action="/update" method="post" class="">
+                  <p class="text-center fs-2 fw-bold">Update Student </p>
+
+                  <input type="hidden" name="update_id" value="{{mydata[0]}}">
+                  <label for="" class="form-label">Enter Name</label>
+                  <input type="text" value="{{mydata[1]}}" name="update_name" class="form-control">
+                  <label for="" class="form-label">Enter Age</label>
+                  <input type="number" name="update_age" value="{{mydata[2]}}" class="form-control">
+
+                  <div class="d-flex gap-3 w-100">
+                    <div class="w-50">
+                      <label for="" class="form-label">Enter Gender</label>
+                      <input type="text" name="update_gender" value="{{mydata[3]}}" class="form-control">
+                    </div>
+                    <div class="w-50">
+                      <label for="" class="form-label">Enter Grade</label>
+                      <input type="text" name="update_grade" value="{{mydata[4]}}" class="form-control">
+                    </div>
+
+
+
+
+                  </div>
+
+                  <div class="d-flex justify-content-end gap-1 mt-2">
+                    <button class="btn btn-secondary">Cancel</button>
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                  </div>
+
+
+                </form>
+
+
+
+              </div>
+            </div>
+          </div>
+
+          {% endfor %}
 
       </tbody>
     </table>
